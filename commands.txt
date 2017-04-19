@@ -1,0 +1,25 @@
+SELECT address,COUNT(*) FROM COMPANY GROUP BY address HAVING count(address) <= 2;
+SELECT address,COUNT(*) FROM COMPANY GROUP BY address;
+select * from company inner join department on company.id = (select studets.id from department inner join studets on department.id=studets.id LIMIT 1);
+select * from department inner join studets on department.id=studets.id;
+select * from department left outer join studets on department.id=studets.id;
+select * from department right outer join studets on department.id=studets.id;
+(select company.id from company inner join department on company.id = department.id) UNION (select department.id from department inner join studets on department.id=studets.id);
+(select company.id from company inner join department on company.id = department.id) UNION ALL(select department.id from department inner join studets on department.id=studets.id);
+select DISTINCT(address) from company;
+select * from company order by saary ASC LIMIT 1 OFFSET 2;
+select * from company where saary > 10000 LIMIT 1 OFFSET 0;
+select * from company where address LIKE '%a%';
+select * from company where address LIKE '_a%';
+select * from company where address LIKE '__l%';
+select * from company where address LIKE 'H%';
+select * from company where address LIKE 'H_d%';
+update company SET id=112 where id=1;
+select add,saary from company group by add,saary order by add;
+select add,SUM(saary) from company group by add,saary order by add;
+insert into company values(1,'candy',24,'rajumandry',50000);
+insert into company values(2,'sai',24,'nalgonda',60000);
+truncate table table_name;
+Drop table table_name;
+I have worked on:
+  
