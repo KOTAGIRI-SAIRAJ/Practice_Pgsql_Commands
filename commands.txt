@@ -21,5 +21,5 @@ insert into company values(1,'candy',24,'rajumandry',50000);
 insert into company values(2,'sai',24,'nalgonda',60000);
 truncate table table_name;
 Drop table table_name;
-I have worked on:
+
   
