@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Page</title>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.15/css/jquery.dataTables.min.css">
+</head>
+<body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src = "https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script>
+
+
+    var temp = 1;
+    var btval = 1;
+    var oTable  ;
+    var arr=[];
+    $(document).ready(function() {
+        $('#xyz').hide();
+    })
+    function display(){
+        $(document).ready(function() {
+            if(arr.length === 0){
+                $('#xyz').hide()
+            }else{
+                $('#xyz').show()
+            }
+            oTable = $('#data_table').DataTable({
+                destroy:true,
+                "aaData": arr,
+                "aoColumns": [{
+                    "mDataProp": "id"
+                },{
+                    "mDataProp": "fname"
+                }, {
+                    "mDataProp": "lname"
+                }, {
+                    "mDataProp": "age"
+                }, {
+                    "mDataProp": "City"
+                }, {
+                    "mDataProp": "State"
+                }, {
+                    "mDataProp": "Zip"
+                }, {
+                    "mDataProp": "Title"
+                }, {
+                    "mDataProp": "Company"
+                }, {
+                    "targets": -1, "data": null, "defaultContent": "<input type='button' class='btn btn-primary' onclick='editbtn(this.id)' value='Edit' data-toggle='modal' data-target='#myModal' />&emsp;<input type = 'button' onclick= 'delbtn(this.id)' id='del' class='btn btn-success' width='25px' value='Delete' />","": h=0
+                }]
+            });
+            //alert(btval);
+        });
+
+    }
+
+    function editbtn(ed_id){
+        alert("from edit button"+ed_id);
+
+        if(h===0)
+        {
+            oTable.$('td').click( function ()
+            {
+                var sData = oTable.row( this ).data() ;
+                $('#eId').val(sData.id);
+                $('#efname').val(sData.fname);
+                $('#elname').val(sData.lname);
+                $('#eAge').val(sData.age);
+                $('#eCity').val(sData.City);
+                $('#eState').val(sData.State);
+                $('#eZip').val(sData.Zip);
+                $('#eTitle').val(sData.Title);
+                $('#eCompany').val(sData.Company);
+            });
+            h++;
+        }
+    }
+
+    function savedata(){
+        var id_temp = $('#eId').val();
+        alert(id_temp);
+        for (var i = 0; i < arr.length; i++) {
+            if(arr[i]["id"] == id_temp){
+                arr[i].fname = $('#efname').val();
+                arr[i].lname = $('#elname').val();
+                arr[i].age = $('#eAge').val();
+                arr[i].City = $('#eCity').val();
+                arr[i].State = $('#eState').val();
+                arr[i].Zip = $('#eZip').val();
+                arr[i].Title = $('#eTitle').val();
+                arr[i].Company = $('#eCompany').val();
+            }
+        };
+        display();
+    }
+
+
+    var h=0;
+    function delbtn(){
+        if(h===0)
+        {
+            oTable.$('td').click( function ()
+            {
+                var sData = oTable.row( this ).data() ;
+                console.log(sData.id);
+                for(var i = 0; i< arr.length ; i++)
+                {
+                    if(arr[i]["id"] == sData.id){
+                        arr.splice(i,1);
+                    }
+                }
+            });
+            h++;
+        }
+        display();
+    }
+
+    function add() {
+        var obj={};
+        $(document).ready(function() {
+            if(arr.length === 0){
+                $('#xyz').hide()
+            }else{
+                $('#xyz').show()
+            }
+            var fname=$('#fname').val();
+            var lname=$('#lname').val();
+            var age=$('#age').val();
+            var City=$('#City').val();
+            var State=$('#State').val();
+            var Zip=$('#Zip').val();
+            var Title=$('#Title').val();
+            var Company=$('#Company').val();
+            obj={
+                "id" : temp,
+                "fname" : fname,
+                "lname" : lname,
+                "age" : age,
+                "City" : City,
+                "State" : State,
+                "Zip" : Zip,
+                "Title" : Title,
+                "Company" : Company
+            }
+            temp++;
+            arr.push(obj);
+            console.log(arr);
+            document.addPageForm.reset();
+            display()
+        });
+    }
+
+
+    /*$('#exampleModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget)
+        var recipient = button.data('whatever')
+        var modal = $(this)
+        modal.find('.modal-title').text('New message to ' + recipient)
+        modal.find('.modal-body input').val(recipient)
+    })*/
+    /*$('#addPageForm').bind('submit',function(e) {
+     e.preventDefault(); //Will prevent the submit...
+     //Add additional code here
+     alert("i m from");
+     var strData = $('#addPageForm').serialize();
+     console.log(strData);
+     alert("bye");
+     });*/
+    /*$('button').click(function(){
+     alert("hi ajnsn");
+     var data_set = $('form').serializeArray();
+     console.log(data_set);
+     });*/
+
+    /*$('#data_table').DataTable({
+
+     columns    :     [
+     json_Array[0].fname     :     fname ,
+     json_Array[0].lname     :     lname ,
+     json_Array[0].age     :     age
+     ]
+     });*/
+
+</script>
+
+<div class="container">
+    <h1 class="well">Registration Form</h1>
+    <div class="col-lg-12 well">
+        <div class="row">
+            <form name="addPageForm">
+                First name:
+                <input type="text" class="form-control" id="fname" placeholder="First name">
+                <br> Last name :
+                <input type="text" class="form-control" id="lname" placeholder="Last name">
+                <br> Age :
+                <input type="number" class="form-control" id="age" placeholder="Age">
+                <br> City :
+                <input type="text" class="form-control" id="City" placeholder="City Name">
+                <br> State :
+                <input type="text" class="form-control" id="State" placeholder="State Name">
+                <br> Zip :
+                <input type="number" class="form-control" id="Zip" placeholder="Zip Code">
+                <br> Title :
+                <input type="text" class="form-control" id="Title" placeholder="Title">
+                <br> Company :
+                <input type="text" class="form-control" id="Company" placeholder="Company Name">
+                <br>
+                <button type="button" onclick = "add()" class="btn btn-lg btn-info">Submit</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div id="xyz">
+<table id="data_table" class="table table-bordered">
+    <thead>
+    <tr>
+        <th>Unique id</th>
+        <th>FirstName</th>
+        <th>LastName</th>
+        <th>Age</th>
+        <th>City</th>
+        <th>State</th>
+        <th>zip</th>
+        <th>Title</th>
+        <th>Company</th>
+        <th>Operations</th>
+    </tr>
+    </thead>
+</table>
+</div>
+<div>
+</div>
+
+
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">User Editing Form</h4>
+            </div>
+            <form>
+                <div class="modal-body">
+                    <td>
+                        Id :<input class="form-control" id="eId" type="text" readonly  autofocus/> </td>
+                    <td>
+                        First Name:<input class="form-control" id="efname" type="text"   placeholder="First name"  autofocus/> </td>
+                    <td>
+                        Last Name:<input class="form-control" id="elname" type="text" placeholder="Last Name"  autofocus/>
+                    </td>
+                    <td>
+                        Age:<input class="form-control" id="eAge" type="number" placeholder="Age" autofocus/>
+                    </td>
+                    <td>
+                        City:<input class="form-control" id="eCity" type="text" placeholder="City" autofocus/>
+                    </td>
+                    <td>
+                        State:<input class="form-control" id="eState" type="text"  placeholder="State" autofocus/>
+                    </td>
+                    <td>
+                        Zip:<input class="form-control" id="eZip" type="text" placeholder="Zip"  autofocus/>
+                    </td>
+                    <td>
+                        Title:<input class="form-control" id="eTitle" type="text" placeholder="Title"  autofocus/>
+                    </td>
+                    <td>
+                        Company:<input class="form-control" id="eCompany" type="text" placeholder="Company"  autofocus/>
+                    </td>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" onclick="savedata()" data-dismiss="modal">Save</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
